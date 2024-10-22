@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.AddNewTasks">
+
+    <TextView
+        android:id="@+id/addTitle_Tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/addTitleEdTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/addTitle_Tv"
+        app:layout_constraintTop_toBottomOf="@id/addTitle_Tv"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:inputType="text"
+        android:layout_marginEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/addSubTitle_Tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addTitleEdTv"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/addSubTitleEdTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/addTitle_Tv"
+        app:layout_constraintTop_toBottomOf="@id/addSubTitle_Tv"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:inputType="text"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/doneBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        app:layout_constraintTop_toBottomOf="@+id/addSubTitleEdTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
