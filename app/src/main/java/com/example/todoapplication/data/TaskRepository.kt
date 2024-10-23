@@ -1,8 +1,6 @@
-package com.example.todoapplication.repository
+package com.example.todoapplication.data
 
 import androidx.lifecycle.LiveData
-import com.example.todoapplication.data.Tasks
-import com.example.todoapplication.data.TasksDAO
 
 class TaskRepository(private val tasksDAO: TasksDAO )  {
 
@@ -14,4 +12,12 @@ class TaskRepository(private val tasksDAO: TasksDAO )  {
     suspend fun deleteTask(tasks: Tasks){
         tasksDAO.deleteTask(tasks)
     }
+    suspend fun updateTask(tasks: Tasks){
+        tasksDAO.updateTask(tasks)
+    }
+    suspend fun getTaskById(id : Int) : Tasks{
+        return tasksDAO.getSingleTask(id)
+
+    }
+
 }

@@ -1,44 +1,73 @@
 package com.example.todoapplication.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.todoapplication.domain.DeleteTaskUseCases
 import com.example.todoapplication.domain.GetUseCase
 import com.example.todoapplication.domain.InsertTaskUseCases
 import com.example.todoapplication.data.Tasks
+import com.example.todoapplication.domain.UpdateTaskUseCases
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TasksViewModel(
     private val insertTaskUseCases: InsertTaskUseCases,
-    private val getUseCases: GetUseCase,
-    private val deleteTaskUseCases: DeleteTaskUseCases
-)
-    : ViewModel() {
+    private val deleteTaskUseCases: DeleteTaskUseCases,
+    private val updateTaskUseCases: UpdateTaskUseCases,
+    private val getUseCases: GetUseCase
+) : ViewModel() {
 
-    val allTasks : LiveData<List<Tasks>> = getUseCases.getRepositoryData()
+    val allTasks: LiveData<List<Tasks>> = getUseCases.getAlltasks()
+    private val _getSingleTask : MutableLiveData<Tasks> = MutableLiveData<Tasks>()
+    val getSingleTask : LiveData<Tasks> = _getSingleTask
 
-    suspend fun insertTask(title : String, description : String) {
-        val task = Tasks(0L,title = title,description = description)
-        insertTaskUseCases.insert(task)
+
+    fun insertTask(id : Int, title: String, description: String) {
+        val task = Tasks(id, title = title, description = description)
+        viewModelScope.launch(Dispatchers.IO) {
+            insertTaskUseCases.insert(task)
+        }
     }
-
-    suspend fun deleteTask(tasks: Tasks){
-        deleteTaskUseCases.delete(tasks)
+    fun deleteTask(tasks: Tasks) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteTaskUseCases.delete(tasks)
+        }
     }
+    fun updateTask(tasks: Tasks) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateTaskUseCases.update(tasks)
+        }
+    }
+    fun getTaskById(id : Int){
+        viewModelScope.launch(Dispatchers.IO){
+            _getSingleTask.postValue(getUseCases.getTaskById(id))
+        }
 
-
-
-
+    }
 }
+
 class TaskViewModelFactory(
     private val insertTaskUseCases: InsertTaskUseCases,
-    private val getUseCases: GetUseCase,
-    private val deleteTaskUseCases: DeleteTaskUseCases
-): ViewModelProvider.Factory {
+    private val deleteTaskUseCases: DeleteTaskUseCases,
+    private val updateTaskUseCases: UpdateTaskUseCases,
+    private val getUseCases: GetUseCase
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TasksViewModel::class.java)) {
-        return TasksViewModel(insertTaskUseCases, getUseCases, deleteTaskUseCases) as T
-    }
+            return TasksViewModel(
+                insertTaskUseCases,
+                deleteTaskUseCases,
+                updateTaskUseCases,
+                getUseCases
+            ) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
+}
+
+enum class Action{
+   EDIT,ADD
 }

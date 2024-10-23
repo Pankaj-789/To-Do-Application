@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.activity.MainActivity">
 
     <TextView
         android:id="@+id/todoheadingTv"
@@ -40,7 +40,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/addtask_icon"
-        android:onClick="addNewTask"
+
         />
 
 

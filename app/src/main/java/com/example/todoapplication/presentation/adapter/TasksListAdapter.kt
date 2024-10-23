@@ -8,16 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapplication.data.Tasks
 import com.example.todoapplication.databinding.EachitemsRvBinding
 
-class TasksListAdapter(private val onDeleteClick : (Tasks) -> Unit) :
+class TasksListAdapter(private val onDeleteClick : (Tasks) -> Unit,
+    private val onEditClick : (Tasks) -> Unit) :
     ListAdapter<Tasks, TasksListAdapter.TaskViewHolder>(DiffCallBack()) {
 
     class TaskViewHolder(private val binding : EachitemsRvBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task : Tasks,onDeleteClick: (Tasks) -> Unit){
+        fun bind(task : Tasks,onDeleteClick: (Tasks) -> Unit,onEditClick: (Tasks) -> Unit){
             binding.headingTv.text = task.title
             binding.subHeadingTv.text = task.description
             binding.deleteIv.setOnClickListener{
-                onDeleteClick(task)
+                onDeleteClick.invoke(task)
+            }
+            binding.editIv.setOnClickListener{
+                onEditClick(task)
+
             }
         }
     }
@@ -32,7 +37,7 @@ class TasksListAdapter(private val onDeleteClick : (Tasks) -> Unit) :
 
     override fun onBindViewHolder(holder: TasksListAdapter.TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, onDeleteClick)
+        holder.bind(task, onDeleteClick,onEditClick)
 
     }
 
