@@ -5,21 +5,23 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".presentation.activity.AddNewTasksActivity">
 
     <Toolbar
-        android:id="@+id/headingNewTaskTv"
+        android:id="@+id/tv_headingNewTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="@string/new_task"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/grey"
-        android:textStyle="bold"/>
+        android:background="@color/actionBarColor"
+        android:textStyle="bold"
+        android:titleTextColor="@color/white"/>
 
     <TextView
-        android:id="@+id/addTitle_Tv"
+        android:id="@+id/tv_addTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
@@ -27,51 +29,56 @@
         android:text="@string/new_title"
         android:textSize="@dimen/dimen_16sp"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headingNewTaskTv" />
+        app:layout_constraintTop_toBottomOf="@id/tv_headingNewTask" />
 
     <EditText
-        android:id="@+id/addTitleEdTv"
+        android:id="@+id/etv_addTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="@id/addTitle_Tv"
-        app:layout_constraintTop_toBottomOf="@id/addTitle_Tv" />
+        android:maxLength="25"
+        app:layout_constraintStart_toStartOf="@id/tv_addTitle"
+        app:layout_constraintTop_toBottomOf="@id/tv_addTitle" />
 
     <TextView
-        android:id="@+id/addSubTitle_Tv"
+        android:id="@+id/tv_addDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:text="@string/add_description"
         android:textSize="@dimen/dimen_16sp"
+        android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addTitleEdTv" />
+        app:layout_constraintTop_toBottomOf="@id/etv_addTitle" />
 
     <EditText
-        android:id="@+id/addSubTitleEdTv"
+        android:id="@+id/etv_addDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="@id/addTitle_Tv"
-        app:layout_constraintTop_toBottomOf="@id/addSubTitle_Tv" />
+        app:layout_constraintStart_toStartOf="@id/tv_addTitle"
+        app:layout_constraintTop_toBottomOf="@id/tv_addDescription" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/add_btn"
+        android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:text="@string/add"
+        app:rippleColor="@color/colorPrimary"
+        android:backgroundTint="@color/buttonColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addSubTitleEdTv" />
+        app:layout_constraintTop_toBottomOf="@+id/etv_addDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.ToDoApplication" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+<!--        <item name="android:background">@color/backgroundColor</item>-->
     </style>
 
     <style name="Theme.ToDoApplication" parent="Base.Theme.ToDoApplication" />
+
+    <style name="backgroundColor" parent="Base.Theme.ToDoApplication" >
+        <item name="backgroundColor">@color/backgroundColor</item>
+    </style>
 
 
 </resources>

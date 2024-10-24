@@ -3,13 +3,12 @@ package com.example.todoapplication.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.todoapplication.domain.DeleteTaskUseCases
-import com.example.todoapplication.domain.GetUseCase
-import com.example.todoapplication.domain.InsertTaskUseCases
+import com.example.todoapplication.domain.usecases.InsertTaskUseCases
 import com.example.todoapplication.data.Tasks
-import com.example.todoapplication.domain.UpdateTaskUseCases
+import com.example.todoapplication.domain.usecases.DeleteTaskUseCases
+import com.example.todoapplication.domain.usecases.GetUseCase
+import com.example.todoapplication.domain.usecases.UpdateTaskUseCases
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

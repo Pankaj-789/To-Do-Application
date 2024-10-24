@@ -2,24 +2,21 @@ package com.example.todoapplication.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.example.todoapplication.databinding.ActivityMainBinding
 import com.example.todoapplication.data.TaskDatabase
-import com.example.todoapplication.data.TaskRepository
-import com.example.todoapplication.domain.DeleteTaskUseCases
-import com.example.todoapplication.domain.GetUseCase
-import com.example.todoapplication.domain.InsertTaskUseCases
-import com.example.todoapplication.domain.UpdateTaskUseCases
+import com.example.todoapplication.data.repository.TaskRepository
+import com.example.todoapplication.domain.usecases.DeleteTaskUseCases
+import com.example.todoapplication.domain.usecases.GetUseCase
+import com.example.todoapplication.domain.usecases.InsertTaskUseCases
+import com.example.todoapplication.domain.usecases.UpdateTaskUseCases
 import com.example.todoapplication.presentation.adapter.TasksListAdapter
 import com.example.todoapplication.presentation.util.Action
 import com.example.todoapplication.presentation.viewmodel.TasksViewModel
 import com.example.todoapplication.presentation.viewmodel.factory.TaskViewModelFactory
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,8 +61,10 @@ class MainActivity : AppCompatActivity() {
     private fun setUpInitialiser(){
         database = Room.databaseBuilder(applicationContext, TaskDatabase::class.java, "taskDB").build()
         val repository = TaskRepository(database.tasksDao())
-        val factory = TaskViewModelFactory(InsertTaskUseCases(repository), DeleteTaskUseCases(repository),
-            UpdateTaskUseCases(repository), GetUseCase(repository))
+        val factory = TaskViewModelFactory(
+            InsertTaskUseCases(repository), DeleteTaskUseCases(repository),
+            UpdateTaskUseCases(repository), GetUseCase(repository)
+        )
 
         tasksViewModel = ViewModelProvider(this, factory)[TasksViewModel::class.java]
 
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
     private fun setUpAdapter(){
-        binding.taskRv.apply {
+        binding.rvTask.apply {
             adapter = tasksListAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun setUpListener(){
-        binding.addTaskFAB.setOnClickListener{
+        binding.fabAddTask.setOnClickListener{
             addNewTask()
         }
     }

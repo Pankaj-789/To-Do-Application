@@ -2,7 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#A8A4A4</color>
+    <color name="grey">#B6B1B1</color>
     <color name="light_blue">#84BDC5</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#9395D3</color>
+    <color name="colorAccent">#0B0B0B</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorText">#000000</color>
+    <color name="actionBarColor">#9395D3</color>
+    <color name="buttonColor">#9395D3</color>
+    <color name="backgroundColor">#D6D7EF</color>
+    <color name="imageColor">#B3B7EE</color>
 
 </resources>

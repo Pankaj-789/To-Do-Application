@@ -1,8 +1,10 @@
-package com.example.todoapplication.data
+package com.example.todoapplication.data.repository
 
 import androidx.lifecycle.LiveData
+import com.example.todoapplication.data.Tasks
+import com.example.todoapplication.data.TasksDAO
 
-class TaskRepository(private val tasksDAO: TasksDAO )  {
+class TaskRepository(private val tasksDAO: TasksDAO)  {
 
     val allTasks : LiveData<List<Tasks>> = tasksDAO.getTask()
 
@@ -15,7 +17,7 @@ class TaskRepository(private val tasksDAO: TasksDAO )  {
     suspend fun updateTask(tasks: Tasks){
         tasksDAO.updateTask(tasks)
     }
-    suspend fun getTaskById(id : Int) : Tasks{
+    suspend fun getTaskById(id : Int) : Tasks {
         return tasksDAO.getSingleTask(id)
 
     }

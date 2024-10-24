@@ -2,8 +2,9 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="@dimen/dimen_4dp"
-    app:cardCornerRadius="@dimen/dimen_4dp"
+    app:cardElevation="@dimen/dimen_8dp"
+    app:cardCornerRadius="@dimen/dimen_15dp"
+    app:cardBackgroundColor="#FFFFFF"
     app:contentPadding="@dimen/dimen_5dp"
     android:layout_marginStart="@dimen/dimen_10dp"
     android:layout_marginEnd="@dimen/dimen_10dp"
@@ -23,7 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="@dimen/dimen_16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/buttonColor"/>
 
         <TextView
             android:id="@+id/subHeadingTv"
