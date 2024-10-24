@@ -64,6 +64,6 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.core)
 
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
 }

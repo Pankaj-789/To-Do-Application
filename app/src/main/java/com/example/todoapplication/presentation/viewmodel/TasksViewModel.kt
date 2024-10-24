@@ -20,54 +20,34 @@ class TasksViewModel(
     private val getUseCases: GetUseCase
 ) : ViewModel() {
 
+    private val _getSingleTask: MutableLiveData<Tasks> = MutableLiveData<Tasks>()
+    val getSingleTask: LiveData<Tasks> = _getSingleTask
+
     val allTasks: LiveData<List<Tasks>> = getUseCases.getAlltasks()
-    private val _getSingleTask : MutableLiveData<Tasks> = MutableLiveData<Tasks>()
-    val getSingleTask : LiveData<Tasks> = _getSingleTask
 
-
-    fun insertTask(id : Int, title: String, description: String) {
+    fun insertTask(id: Int, title: String, description: String) {
         val task = Tasks(id, title = title, description = description)
         viewModelScope.launch(Dispatchers.IO) {
             insertTaskUseCases.insert(task)
         }
     }
+
     fun deleteTask(tasks: Tasks) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteTaskUseCases.delete(tasks)
         }
     }
+
     fun updateTask(tasks: Tasks) {
         viewModelScope.launch(Dispatchers.IO) {
             updateTaskUseCases.update(tasks)
         }
     }
-    fun getTaskById(id : Int){
-        viewModelScope.launch(Dispatchers.IO){
+
+    fun getTaskById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
             _getSingleTask.postValue(getUseCases.getTaskById(id))
         }
 
     }
-}
-
-class TaskViewModelFactory(
-    private val insertTaskUseCases: InsertTaskUseCases,
-    private val deleteTaskUseCases: DeleteTaskUseCases,
-    private val updateTaskUseCases: UpdateTaskUseCases,
-    private val getUseCases: GetUseCase
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TasksViewModel::class.java)) {
-            return TasksViewModel(
-                insertTaskUseCases,
-                deleteTaskUseCases,
-                updateTaskUseCases,
-                getUseCases
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
-
-enum class Action{
-   EDIT,ADD
 }
