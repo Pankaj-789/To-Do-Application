@@ -1,6 +1,7 @@
 package com.example.todoapplication.presentation.activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +25,6 @@ class AddNewTasksActivity : AppCompatActivity() {
     private lateinit var taskViewModel: TasksViewModel
     private var taskId: Int = 0
     private var action: String = Action.ADD.name
-    private var isTrue : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,36 +53,40 @@ class AddNewTasksActivity : AppCompatActivity() {
             val taskTitle = binding.etvAddTitle.text.toString().trim()
             val taskDes = binding.etvAddDescription.text.toString().trim()
 
-            if(taskTitle.isEmpty()){
-                binding.etvAddTitle.error = "Title cannot be empty"
-                return@setOnClickListener
+            taskViewModel.titleError.observe(this) { error ->
+                binding.etvAddTitle.error = error
             }
-            if(taskDes.isEmpty()){
-                binding.etvAddDescription.error = "Description cannot be empty"
-                return@setOnClickListener
+            taskViewModel.descriptionError.observe(this) { error ->
+                binding.etvAddDescription.error = error
             }
 
-            if (action == Action.ADD.name && taskTitle.isNotEmpty() && taskDes.isNotEmpty()) {
-                taskViewModel.insertTask(taskId, taskTitle, taskDes)
-                Toast.makeText(this, "Task Added Successfully", Toast.LENGTH_SHORT).show()
-                finish()
+            if (action == Action.ADD.name) {
+                taskViewModel.validateAndInsertTask(taskTitle, taskDes, taskId)
+                taskViewModel.titleError.observe(this) { error ->
+                    if (error == null && taskDes.isNotEmpty()) {
+                        Toast.makeText(this, "Task Added Successfully", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
             } else if (action == Action.EDIT.name) {
-                taskViewModel.updateTask(Tasks(taskId, taskTitle, taskDes))
-
-                Toast.makeText(this, "Task Updated Successfully", Toast.LENGTH_SHORT).show()
-                finish()
+                if (taskViewModel.titleError.value == null && taskViewModel.descriptionError.value == null) {
+                    taskViewModel.updateTask(Tasks(taskId, taskTitle, taskDes))
+                    Toast.makeText(this, "Task Updated Successfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
             }
         }
     }
+
+
     private fun setUpArguments() {
         taskId = intent.getIntExtra("taskId", 0)
         action = intent.getStringExtra("Action") ?: Action.ADD.name
 
-
         if (action == Action.EDIT.name) {
             supportActionBar?.title = "Update Task"
             taskViewModel.getTaskById(taskId)
-        }else{
+        } else {
             supportActionBar?.title = "Add New Task"
         }
     }
@@ -92,5 +96,14 @@ class AddNewTasksActivity : AppCompatActivity() {
             binding.etvAddTitle.setText(it.title)
             binding.etvAddDescription.setText(it.description)
         }
+
+        taskViewModel.titleError.observe(this) { error ->
+            binding.etvAddTitle.error = error
+
+        }
+        taskViewModel.descriptionError.observe(this) { error ->
+            binding.etvAddDescription.error = error
+        }
+
     }
 }

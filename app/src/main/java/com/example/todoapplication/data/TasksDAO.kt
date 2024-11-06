@@ -7,10 +7,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
+
 @Dao
 interface TasksDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Upsert
     suspend fun insertTask(tasks: Tasks)
 
     @Delete
@@ -24,5 +26,8 @@ interface TasksDAO {
 
     @Query("Select * from Tasks where id= :id")
     fun getSingleTask(id : Int) : Tasks
+
+//    @Query("SELECT * FROM tasks ORDER BY isPinned DESC, id ASC")
+//    fun getAllTasks(): LiveData<List<Tasks>>
 
 }

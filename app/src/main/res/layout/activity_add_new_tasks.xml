@@ -20,6 +20,8 @@
         android:textStyle="bold"
         android:titleTextColor="@color/white"/>
 
+
+
     <TextView
         android:id="@+id/tv_addTitle"
         android:layout_width="wrap_content"

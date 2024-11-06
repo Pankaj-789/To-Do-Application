@@ -8,4 +8,5 @@
     <string name="enter_new_task">Enter New Task</string>
     <string name="add_description">Add Description</string>
     <string name="new_task">New Task</string>
+    <string name="no_records_present">No Records present</string>
 </resources>

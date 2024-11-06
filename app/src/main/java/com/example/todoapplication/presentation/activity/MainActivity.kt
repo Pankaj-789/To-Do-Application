@@ -3,12 +3,13 @@ package com.example.todoapplication.presentation.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.example.todoapplication.databinding.ActivityMainBinding
 import com.example.todoapplication.data.TaskDatabase
 import com.example.todoapplication.data.repository.TaskRepository
+import com.example.todoapplication.databinding.ActivityMainBinding
 import com.example.todoapplication.domain.usecases.DeleteTaskUseCases
 import com.example.todoapplication.domain.usecases.GetUseCase
 import com.example.todoapplication.domain.usecases.InsertTaskUseCases
@@ -35,22 +36,25 @@ class MainActivity : AppCompatActivity() {
         setUpObserver()
         setUpListener()
     }
+
     private fun getData() {
         database.tasksDao().getTask().observe(this) { tasks ->
             if (tasks != null) {
                 tasksListAdapter.submitList(tasks)
+                binding.tvNoRecords.isVisible = tasks.isEmpty()
             }
         }
     }
+
     private fun addNewTask() {
         val intent = Intent(this, AddNewTasksActivity::class.java)
         startActivity(intent)
     }
 
-    private fun editTask(id : Int) {
+    private fun editTask(id: Int) {
         val intent = Intent(this, AddNewTasksActivity::class.java)
-        intent.putExtra("taskId",id)
-        intent.putExtra("Action",Action.EDIT.name)
+        intent.putExtra("taskId", id)
+        intent.putExtra("Action", Action.EDIT.name)
         startActivity(intent)
     }
 
@@ -58,8 +62,10 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         getData()
     }
-    private fun setUpInitialiser(){
-        database = Room.databaseBuilder(applicationContext, TaskDatabase::class.java, "taskDB").build()
+
+    private fun setUpInitialiser() {
+        database =
+            Room.databaseBuilder(applicationContext, TaskDatabase::class.java, "taskDB").build()
         val repository = TaskRepository(database.tasksDao())
         val factory = TaskViewModelFactory(
             InsertTaskUseCases(repository), DeleteTaskUseCases(repository),
@@ -74,20 +80,26 @@ class MainActivity : AppCompatActivity() {
             editTask(task.id)
         })
     }
-    private fun setUpAdapter(){
+
+    private fun setUpAdapter() {
         binding.rvTask.apply {
             adapter = tasksListAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
-    private fun setUpObserver(){
+
+    private fun setUpObserver() {
         tasksViewModel.allTasks.observe(this) { tasks ->
+            if (tasks == null) return@observe
             tasksListAdapter.submitList(tasks)
+            binding.tvNoRecords.isVisible = tasks.isEmpty()
         }
     }
-    private fun setUpListener(){
-        binding.fabAddTask.setOnClickListener{
+
+    private fun setUpListener() {
+        binding.fabAddTask.setOnClickListener {
             addNewTask()
         }
     }
+
 }

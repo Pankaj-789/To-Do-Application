@@ -5,24 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todoapplication.R
 import com.example.todoapplication.data.Tasks
 import com.example.todoapplication.databinding.EachitemsRvBinding
 
 class TasksListAdapter(
     private val onDeleteClick: (Tasks) -> Unit,
     private val onEditClick: (Tasks) -> Unit
+
 ) :
     ListAdapter<Tasks, TasksListAdapter.TaskViewHolder>(DiffCallBack()) {
 
     class TaskViewHolder(private val binding: EachitemsRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        init {
-
-        }
 
         fun bind(task: Tasks, onDeleteClick: (Tasks) -> Unit, onEditClick: (Tasks) -> Unit) {
             binding.headingTv.text = task.title
             binding.subHeadingTv.text = task.description
+
             binding.deleteIv.setOnClickListener {
                 onDeleteClick.invoke(task)
             }
